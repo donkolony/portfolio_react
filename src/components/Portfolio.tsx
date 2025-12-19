@@ -1,0 +1,120 @@
+import { ExternalLink, Github } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+interface Project {
+  title: string;
+  description: string;
+  image: string;
+  tags: string[];
+  githubUrl: string;
+  liveUrl: string;
+}
+
+const projects: Project[] = [
+  {
+    title: "OCA Website",
+    description:
+      "A modern organizational website built with clean design principles and responsive layout. Features include dynamic content sections and optimized performance.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    tags: ["HTML", "CSS", "JavaScript"],
+    githubUrl: "https://github.com/dieudonne",
+    liveUrl: "#",
+  },
+  {
+    title: "Omnifood",
+    description:
+      "A fictional food delivery service landing page showcasing modern CSS techniques, smooth animations, and conversion-focused design patterns.",
+    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
+    tags: ["HTML", "CSS", "JavaScript"],
+    githubUrl: "https://github.com/dieudonne",
+    liveUrl: "#",
+  },
+  {
+    title: "Daniel's Portfolio",
+    description:
+      "A sleek developer portfolio featuring dark theme, smooth scrolling, and interactive project showcases. Built with performance and accessibility in mind.",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
+    tags: ["React", "Tailwind", "TypeScript"],
+    githubUrl: "https://github.com/dieudonne",
+    liveUrl: "#",
+  },
+];
+
+export const Portfolio = () => {
+  return (
+    <section id="portfolio" className="section-padding bg-background">
+      <div className="container-custom">
+        {/* Section Header */}
+        <div className="text-center mb-16">
+          <p className="text-sm uppercase tracking-[0.2em] text-muted-foreground mb-3">
+            My recent work
+          </p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
+            Portfolio
+          </h2>
+        </div>
+
+        {/* Projects Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {projects.map((project, index) => (
+            <Card
+              key={index}
+              className="group overflow-hidden hover-lift bg-card border-border"
+            >
+              {/* Image */}
+              <div className="relative overflow-hidden aspect-video">
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                {/* Overlay on hover */}
+                <div className="absolute inset-0 bg-foreground/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    className="rounded-full"
+                    asChild
+                  >
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                      <Github className="h-5 w-5" />
+                    </a>
+                  </Button>
+                  <Button
+                    size="icon"
+                    variant="secondary"
+                    className="rounded-full"
+                    asChild
+                  >
+                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                      <ExternalLink className="h-5 w-5" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+
+              <CardContent className="p-6">
+                <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+                  {project.description}
+                </p>
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs px-3 py-1 rounded-full bg-secondary text-secondary-foreground"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
