@@ -1,5 +1,5 @@
 import { useForm, ValidationError } from "@formspree/react";
-import { Send, Github, Linkedin, Twitter, MessageCircle, Mail, MapPin, Loader2, CheckCircle } from "lucide-react";
+import { Send, Github, Linkedin, Mail, MapPin, Loader2, CheckCircle, Instagram } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,11 +7,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { AnimatedSection } from "./AnimatedSection";
 import { useEffect, useState } from "react";
 
+// Custom X (Twitter) icon component
+const XIcon = ({ className }: { className?: string }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
 const socialLinks = [
-  { icon: Github, href: "https://github.com/dieudonne", label: "GitHub" },
-  { icon: Linkedin, href: "https://linkedin.com/in/dieudonne", label: "LinkedIn" },
-  { icon: Twitter, href: "https://twitter.com/dieudonne", label: "Twitter" },
-  { icon: MessageCircle, href: "https://wa.me/237600000000", label: "WhatsApp" },
+  { icon: Github, href: "https://github.com/donkolony", label: "GitHub" },
+  { icon: Linkedin, href: "https://www.linkedin.com/in/d-kolony/", label: "LinkedIn" },
+  { icon: XIcon, href: "https://x.com/", label: "X" },
+  { icon: Instagram, href: "https://www.instagram.com/", label: "Instagram" },
 ];
 
 export const Contact = () => {
@@ -87,7 +94,7 @@ export const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Location</p>
-                    <p className="font-medium">Cameroon</p>
+                    <p className="font-medium">Cape Town, South Africa</p>
                   </div>
                 </div>
               </div>

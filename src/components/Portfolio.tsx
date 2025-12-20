@@ -17,7 +17,7 @@ const projects: Project[] = [
     title: "OCA Website",
     description:
       "A local eCommerce store featuring product showcases, seamless navigation, and a user-friendly shopping experience optimized for customer engagement.",
-    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800&q=80",
     tags: ["WordPress"],
     githubUrl: "",
     liveUrl: "https://ouicestnous.com/",
