@@ -1,10 +1,11 @@
 import { useForm, ValidationError } from "@formspree/react";
-import { Send, Github, Linkedin, Twitter, MessageCircle, Mail, MapPin, Loader2 } from "lucide-react";
+import { Send, Github, Linkedin, Twitter, MessageCircle, Mail, MapPin, Loader2, CheckCircle } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { AnimatedSection } from "./AnimatedSection";
+import { useEffect, useState } from "react";
 
 const socialLinks = [
   { icon: Github, href: "https://github.com/dieudonne", label: "GitHub" },
@@ -15,6 +16,24 @@ const socialLinks = [
 
 export const Contact = () => {
   const [state, handleSubmit] = useForm("xojaedol");
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setPrefersReducedMotion(mediaQuery.matches);
+    
+    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener("change", handler);
+    return () => mediaQuery.removeEventListener("change", handler);
+  }, []);
+
+  useEffect(() => {
+    if (state.succeeded) {
+      setIsFlipped(true);
+    }
+  }, [state.succeeded]);
 
   return (
     <section id="contact" className="section-padding bg-secondary/30">
@@ -82,74 +101,103 @@ export const Contact = () => {
             </div>
           </AnimatedSection>
 
-          {/* Contact Form */}
+          {/* Contact Form with Flip Animation */}
           <AnimatedSection animation="slide-right" delay={200}>
-            <Card className="bg-card border-border">
-              <CardContent className="p-6 md:p-8">
-                {state.succeeded ? (
-                  <div className="text-center py-8 space-y-4">
-                    <div className="w-16 h-16 mx-auto rounded-full bg-green-500/10 flex items-center justify-center">
-                      <Send className="h-8 w-8 text-green-500" />
+            <div 
+              className="relative h-[420px]"
+              style={{ perspective: "1000px" }}
+            >
+              <div
+                className={`relative w-full h-full transition-transform duration-700 ${
+                  prefersReducedMotion ? "" : "[transform-style:preserve-3d]"
+                } ${isFlipped && !prefersReducedMotion ? "[transform:rotateY(180deg)]" : ""}`}
+              >
+                {/* Front - Contact Form */}
+                <Card 
+                  className={`absolute inset-0 bg-card border-border ${
+                    prefersReducedMotion ? (isFlipped ? "hidden" : "") : "[backface-visibility:hidden]"
+                  }`}
+                >
+                  <CardContent className="p-6 md:p-8 h-full">
+                    <form onSubmit={handleSubmit} className="space-y-6 h-full flex flex-col">
+                      <div>
+                        <Input
+                          id="name"
+                          name="name"
+                          placeholder="Your Name"
+                          required
+                          className="bg-background transition-all duration-200 focus:scale-[1.01]"
+                        />
+                        <ValidationError prefix="Name" field="name" errors={state.errors} className="text-sm text-destructive mt-1" />
+                      </div>
+                      <div>
+                        <Input
+                          id="email"
+                          name="email"
+                          type="email"
+                          placeholder="Your Email"
+                          required
+                          className="bg-background transition-all duration-200 focus:scale-[1.01]"
+                        />
+                        <ValidationError prefix="Email" field="email" errors={state.errors} className="text-sm text-destructive mt-1" />
+                      </div>
+                      <div className="flex-1">
+                        <Textarea
+                          id="message"
+                          name="message"
+                          placeholder="Your Message"
+                          required
+                          rows={5}
+                          className="bg-background resize-none transition-all duration-200 focus:scale-[1.01] h-full min-h-[120px]"
+                        />
+                        <ValidationError prefix="Message" field="message" errors={state.errors} className="text-sm text-destructive mt-1" />
+                      </div>
+                      <Button
+                        type="submit"
+                        size="lg"
+                        className="w-full hover:scale-[1.02] transition-all duration-200"
+                        disabled={state.submitting}
+                      >
+                        {state.submitting ? (
+                          <>
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                            Sending...
+                          </>
+                        ) : (
+                          <>
+                            Send Message
+                            <Send className="ml-2 h-4 w-4" />
+                          </>
+                        )}
+                      </Button>
+                    </form>
+                  </CardContent>
+                </Card>
+
+                {/* Back - Success Message */}
+                <Card 
+                  className={`absolute inset-0 bg-card border-border ${
+                    prefersReducedMotion 
+                      ? (isFlipped ? "" : "hidden") 
+                      : "[backface-visibility:hidden] [transform:rotateY(180deg)]"
+                  }`}
+                >
+                  <CardContent className="p-6 md:p-8 h-full flex flex-col items-center justify-center text-center">
+                    <div className="w-20 h-20 mx-auto rounded-full bg-green-500/10 flex items-center justify-center mb-6 animate-scale-in">
+                      <CheckCircle className="h-10 w-10 text-green-500" />
                     </div>
-                    <h3 className="text-xl font-semibold">Thanks for reaching out!</h3>
-                    <p className="text-muted-foreground">I'll get back to you as soon as possible.</p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div>
-                      <Input
-                        id="name"
-                        name="name"
-                        placeholder="Your Name"
-                        required
-                        className="bg-background transition-all duration-200 focus:scale-[1.01]"
-                      />
-                      <ValidationError prefix="Name" field="name" errors={state.errors} className="text-sm text-destructive mt-1" />
+                    <h3 className="text-2xl font-bold mb-3">Message Sent!</h3>
+                    <p className="text-muted-foreground text-lg leading-relaxed max-w-sm">
+                      Thanks for reaching out! I'll get back to you as soon as possible.
+                    </p>
+                    <div className="mt-8 flex items-center gap-2 text-sm text-muted-foreground">
+                      <Mail className="h-4 w-4" />
+                      <span>Check your inbox for a confirmation</span>
                     </div>
-                    <div>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="Your Email"
-                        required
-                        className="bg-background transition-all duration-200 focus:scale-[1.01]"
-                      />
-                      <ValidationError prefix="Email" field="email" errors={state.errors} className="text-sm text-destructive mt-1" />
-                    </div>
-                    <div>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        placeholder="Your Message"
-                        required
-                        rows={5}
-                        className="bg-background resize-none transition-all duration-200 focus:scale-[1.01]"
-                      />
-                      <ValidationError prefix="Message" field="message" errors={state.errors} className="text-sm text-destructive mt-1" />
-                    </div>
-                    <Button
-                      type="submit"
-                      size="lg"
-                      className="w-full hover:scale-[1.02] transition-all duration-200"
-                      disabled={state.submitting}
-                    >
-                      {state.submitting ? (
-                        <>
-                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          Send Message
-                          <Send className="ml-2 h-4 w-4" />
-                        </>
-                      )}
-                    </Button>
-                  </form>
-                )}
-              </CardContent>
-            </Card>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
           </AnimatedSection>
         </div>
       </div>

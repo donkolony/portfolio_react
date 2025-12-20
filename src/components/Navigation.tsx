@@ -13,6 +13,7 @@ const navLinks = [
 export const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,6 +23,19 @@ export const Navigation = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    // Listen for theme changes
+    const checkTheme = () => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    };
+    checkTheme();
+    
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+    
+    return () => observer.disconnect();
+  }, []);
+
   const scrollToSection = (href: string) => {
     setIsMobileMenuOpen(false);
     const element = document.querySelector(href);
@@ -29,6 +43,10 @@ export const Navigation = () => {
       element.scrollIntoView({ behavior: "smooth" });
     }
   };
+
+  // In light mode: white text over hero, dark text when scrolled
+  // In dark mode: always use default (light text)
+  const useHeroStyle = !isScrolled && !isDark;
 
   return (
     <header
@@ -47,7 +65,9 @@ export const Navigation = () => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="text-xl md:text-2xl font-bold tracking-tight hover:opacity-80 transition-opacity"
+            className={`text-xl md:text-2xl font-bold tracking-tight hover:opacity-80 transition-all duration-300 ${
+              useHeroStyle ? "text-white" : "text-foreground"
+            }`}
           >
             D.K
           </a>
@@ -58,23 +78,30 @@ export const Navigation = () => {
               <button
                 key={link.href}
                 onClick={() => scrollToSection(link.href)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-all duration-300 relative group"
+                className={`text-sm font-medium transition-all duration-300 relative group ${
+                  useHeroStyle 
+                    ? "text-white/80 hover:text-white" 
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-foreground transition-all duration-300 ease-out group-hover:w-full origin-left" />
+                <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 ease-out group-hover:w-full origin-left ${
+                  useHeroStyle ? "bg-white" : "bg-foreground"
+                }`} />
               </button>
             ))}
-            <ThemeToggle />
+            <ThemeToggle isHeroStyle={useHeroStyle} />
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-2 md:hidden">
-            <ThemeToggle />
+            <ThemeToggle isHeroStyle={useHeroStyle} />
             <Button
               variant="ghost"
               size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle menu"
+              className={useHeroStyle ? "text-white hover:bg-white/10" : ""}
             >
               {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </Button>
@@ -92,7 +119,11 @@ export const Navigation = () => {
               <button
                 key={link.href}
                 onClick={() => scrollToSection(link.href)}
-                className="text-left py-2 text-muted-foreground hover:text-foreground transition-colors"
+                className={`text-left py-2 transition-colors ${
+                  useHeroStyle 
+                    ? "text-white/80 hover:text-white" 
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 {link.label}
               </button>
