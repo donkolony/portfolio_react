@@ -18,6 +18,7 @@ export const Contact = () => {
   const [state, handleSubmit] = useForm("xojaedol");
   const [isFlipped, setIsFlipped] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [formKey, setFormKey] = useState(0);
 
   useEffect(() => {
     // Check for reduced motion preference
@@ -30,17 +31,18 @@ export const Contact = () => {
   }, []);
 
   useEffect(() => {
-    if (state.succeeded) {
+    if (state.succeeded && !isFlipped) {
       setIsFlipped(true);
       
-      // Auto flip back after 5 seconds
+      // Auto flip back after 5 seconds and reset form
       const timer = setTimeout(() => {
         setIsFlipped(false);
+        setFormKey(prev => prev + 1); // Reset form by changing key
       }, 5000);
       
       return () => clearTimeout(timer);
     }
-  }, [state.succeeded]);
+  }, [state.succeeded, isFlipped]);
 
   return (
     <section id="contact" className="section-padding bg-secondary/30">
@@ -126,7 +128,7 @@ export const Contact = () => {
                   }`}
                 >
                   <CardContent className="p-6 md:p-8 h-full">
-                    <form onSubmit={handleSubmit} className="space-y-6 h-full flex flex-col">
+                    <form key={formKey} onSubmit={handleSubmit} className="space-y-6 h-full flex flex-col">
                       <div>
                         <Input
                           id="name"
