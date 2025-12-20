@@ -17,7 +17,7 @@ const projects: Project[] = [
     title: "OCA Website",
     description:
       "A local eCommerce store featuring product showcases, seamless navigation, and a user-friendly shopping experience optimized for customer engagement.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80",
     tags: ["WordPress"],
     githubUrl: "",
     liveUrl: "https://ouicestnous.com/",
@@ -26,7 +26,7 @@ const projects: Project[] = [
     title: "Walkin Progress",
     description:
       "A non-profit organization website dedicated to shaping young minds with knowledge and skills through community-driven programs and initiatives.",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&q=80",
     tags: ["HTML", "CSS", "JavaScript"],
     githubUrl: "https://github.com/donkolony/walkin_progress",
     liveUrl: "https://donkolony.github.io/walkin_progress/",
