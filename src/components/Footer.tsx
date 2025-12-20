@@ -28,7 +28,7 @@ export const Footer = () => {
               e.preventDefault();
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
-            className="text-xl font-bold hover:opacity-80 transition-opacity"
+            className="text-xl font-bold hover:opacity-80 hover:scale-105 transition-all duration-300"
           >
             D.K
           </a>
@@ -39,16 +39,17 @@ export const Footer = () => {
               <button
                 key={link.href}
                 onClick={() => scrollToSection(link.href)}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm text-muted-foreground hover:text-foreground transition-all duration-300 relative group"
               >
                 {link.label}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-foreground transition-all duration-300 ease-out group-hover:w-full" />
               </button>
             ))}
           </nav>
 
           {/* Copyright */}
           <p className="text-sm text-muted-foreground flex items-center gap-1">
-            © {currentYear} Made with <Heart className="h-3 w-3 text-red-500" /> by Dieudonne
+            © {currentYear} Made with <Heart className="h-3 w-3 text-red-500 animate-pulse" /> by Dieudonne
           </p>
         </div>
       </div>

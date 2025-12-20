@@ -32,11 +32,11 @@ export const ThemeToggle = () => {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="relative w-10 h-10 rounded-full"
+      className="relative w-10 h-10 rounded-full hover:scale-110 transition-all duration-300"
       aria-label="Toggle theme"
     >
-      <Sun className={`h-5 w-5 transition-all duration-300 ${isDark ? "scale-0 rotate-90" : "scale-100 rotate-0"}`} />
-      <Moon className={`absolute h-5 w-5 transition-all duration-300 ${isDark ? "scale-100 rotate-0" : "scale-0 -rotate-90"}`} />
+      <Sun className={`h-5 w-5 absolute transition-all duration-500 ${isDark ? "scale-0 rotate-180 opacity-0" : "scale-100 rotate-0 opacity-100"}`} />
+      <Moon className={`h-5 w-5 absolute transition-all duration-500 ${isDark ? "scale-100 rotate-0 opacity-100" : "scale-0 -rotate-180 opacity-0"}`} />
     </Button>
   );
 };

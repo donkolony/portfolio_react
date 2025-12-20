@@ -137,9 +137,9 @@
     @apply bg-clip-text text-transparent bg-gradient-to-r from-foreground to-muted-foreground;
   }
 
-  /* Hover scale */
+  /* Hover lift - enhanced */
   .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+    @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-xl;
   }
 
   /* Section spacing */
@@ -150,6 +150,20 @@
   /* Container max width */
   .container-custom {
     @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Button glow effect */
+  .btn-glow {
+    @apply relative overflow-hidden;
+  }
+
+  .btn-glow::after {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full transition-transform duration-700;
+  }
+
+  .btn-glow:hover::after {
+    @apply translate-x-full;
   }
 }
 
