@@ -17,7 +17,7 @@ const projects: Project[] = [
     title: "OCA Website",
     description:
       "A modern organizational website built with clean design principles and responsive layout. Features include dynamic content sections and optimized performance.",
-    image: "https://images.unsplash.com/photo-460925895917-afdab827c52f?w=800&q=80",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
     tags: ["HTML", "CSS", "JavaScript"],
     githubUrl: "https://github.com/dieudonne",
     liveUrl: "#",

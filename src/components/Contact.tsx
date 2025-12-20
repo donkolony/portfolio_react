@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useForm, ValidationError } from "@formspree/react";
 import { Send, Github, Linkedin, Twitter, MessageCircle, Mail, MapPin, Loader2 } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
 import { AnimatedSection } from "./AnimatedSection";
 
 const socialLinks = [
@@ -15,56 +14,7 @@ const socialLinks = [
 ];
 
 export const Contact = () => {
-  const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // Replace YOUR_FORM_ID with your actual Formspree form ID
-      const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        toast({
-          title: "Message sent successfully!",
-          description: "Thank you for reaching out. I'll get back to you soon.",
-        });
-        setFormData({ name: "", email: "", message: "" });
-      } else {
-        const data = await response.json();
-        throw new Error(data.error || "Failed to send message");
-      }
-    } catch (error) {
-      toast({
-        title: "Error sending message",
-        description: "Please try again later or contact me directly via email.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const [state, handleSubmit] = useForm("xojaedol");
 
   return (
     <section id="contact" className="section-padding bg-secondary/30">
@@ -97,8 +47,8 @@ export const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Email</p>
-                    <a href="mailto:dieudonne@example.com" className="font-medium hover:underline">
-                      dieudonne@example.com
+                    <a href="mailto:donkolony@gmail.com" className="font-medium hover:underline">
+                      donkolony@gmail.com
                     </a>
                   </div>
                 </div>
@@ -136,58 +86,68 @@ export const Contact = () => {
           <AnimatedSection animation="slide-right" delay={200}>
             <Card className="bg-card border-border">
               <CardContent className="p-6 md:p-8">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <Input
-                      name="name"
-                      placeholder="Your Name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className="bg-background transition-all duration-200 focus:scale-[1.01]"
-                    />
+                {state.succeeded ? (
+                  <div className="text-center py-8 space-y-4">
+                    <div className="w-16 h-16 mx-auto rounded-full bg-green-500/10 flex items-center justify-center">
+                      <Send className="h-8 w-8 text-green-500" />
+                    </div>
+                    <h3 className="text-xl font-semibold">Thanks for reaching out!</h3>
+                    <p className="text-muted-foreground">I'll get back to you as soon as possible.</p>
                   </div>
-                  <div>
-                    <Input
-                      name="email"
-                      type="email"
-                      placeholder="Your Email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className="bg-background transition-all duration-200 focus:scale-[1.01]"
-                    />
-                  </div>
-                  <div>
-                    <Textarea
-                      name="message"
-                      placeholder="Your Message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      required
-                      rows={5}
-                      className="bg-background resize-none transition-all duration-200 focus:scale-[1.01]"
-                    />
-                  </div>
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="w-full hover:scale-[1.02] transition-all duration-200"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Sending...
-                      </>
-                    ) : (
-                      <>
-                        Send Message
-                        <Send className="ml-2 h-4 w-4" />
-                      </>
-                    )}
-                  </Button>
-                </form>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                      <Input
+                        id="name"
+                        name="name"
+                        placeholder="Your Name"
+                        required
+                        className="bg-background transition-all duration-200 focus:scale-[1.01]"
+                      />
+                      <ValidationError prefix="Name" field="name" errors={state.errors} className="text-sm text-destructive mt-1" />
+                    </div>
+                    <div>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Your Email"
+                        required
+                        className="bg-background transition-all duration-200 focus:scale-[1.01]"
+                      />
+                      <ValidationError prefix="Email" field="email" errors={state.errors} className="text-sm text-destructive mt-1" />
+                    </div>
+                    <div>
+                      <Textarea
+                        id="message"
+                        name="message"
+                        placeholder="Your Message"
+                        required
+                        rows={5}
+                        className="bg-background resize-none transition-all duration-200 focus:scale-[1.01]"
+                      />
+                      <ValidationError prefix="Message" field="message" errors={state.errors} className="text-sm text-destructive mt-1" />
+                    </div>
+                    <Button
+                      type="submit"
+                      size="lg"
+                      className="w-full hover:scale-[1.02] transition-all duration-200"
+                      disabled={state.submitting}
+                    >
+                      {state.submitting ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          Send Message
+                          <Send className="ml-2 h-4 w-4" />
+                        </>
+                      )}
+                    </Button>
+                  </form>
+                )}
               </CardContent>
             </Card>
           </AnimatedSection>
