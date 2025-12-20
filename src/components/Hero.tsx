@@ -11,7 +11,7 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Video */}
+      {/* Background Video - Abstract tech/data visualization */}
       <div className="absolute inset-0 z-0">
         <video
           autoPlay
@@ -21,14 +21,14 @@ export const Hero = () => {
           className="w-full h-full object-cover"
           poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80"
         >
-          {/* Placeholder video - abstract tech visualization */}
+          {/* Abstract digital/tech visualization - seamless loop */}
           <source
-            src="https://cdn.pixabay.com/video/2020/05/25/40130-424930032_large.mp4"
+            src="https://cdn.pixabay.com/video/2021/08/20/85597-592056009_large.mp4"
             type="video/mp4"
           />
         </video>
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-hero-overlay/70" />
+        {/* Dark gradient overlay for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-hero-overlay/80 via-hero-overlay/70 to-hero-overlay/90" />
       </div>
 
       {/* Content */}
@@ -59,7 +59,7 @@ export const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-400">
             <Button
               size="lg"
-              className="bg-white text-black hover:bg-white/90 font-medium px-8"
+              className="bg-white text-black hover:bg-white/90 hover:scale-105 font-medium px-8 transition-all duration-300 shadow-lg hover:shadow-xl"
               asChild
             >
               <a href="/cv.pdf" download>
@@ -70,7 +70,7 @@ export const Hero = () => {
             <Button
               size="lg"
               variant="outline"
-              className="border-white/50 text-white hover:bg-white/10 font-medium px-8 bg-transparent"
+              className="border-white/50 text-white hover:bg-white/10 hover:border-white hover:scale-105 font-medium px-8 bg-transparent transition-all duration-300"
               onClick={scrollToPortfolio}
             >
               <ExternalLink className="mr-2 h-4 w-4" />
@@ -87,7 +87,7 @@ export const Hero = () => {
             const element = document.querySelector("#about");
             if (element) element.scrollIntoView({ behavior: "smooth" });
           }}
-          className="text-white/70 hover:text-white transition-colors"
+          className="text-white/70 hover:text-white transition-all duration-300 hover:scale-110"
           aria-label="Scroll down"
         >
           <ArrowDown className="h-6 w-6" />
