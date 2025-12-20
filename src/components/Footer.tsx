@@ -49,7 +49,7 @@ export const Footer = () => {
 
           {/* Copyright */}
           <p className="text-sm text-muted-foreground">
-            © {currentYear} All rights Reserved
+            © {currentYear} Dieudonne Kolony. All rights Reserved
           </p>
         </div>
       </div>
