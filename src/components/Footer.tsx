@@ -48,8 +48,8 @@ export const Footer = () => {
           </nav>
 
           {/* Copyright */}
-          <p className="text-sm text-muted-foreground flex items-center gap-1">
-            © {currentYear} Made with <Heart className="h-3 w-3 text-red-500 animate-pulse" /> by Dieudonne
+          <p className="text-sm text-muted-foreground">
+            © {currentYear} All rights Reserved
           </p>
         </div>
       </div>

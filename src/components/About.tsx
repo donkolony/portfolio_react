@@ -10,8 +10,8 @@ const highlights = [
   },
   {
     icon: GraduationCap,
-    title: "BSc Holder",
-    description: "Computer Science",
+    title: "BTech Holder",
+    description: "Civil Engineering",
   },
   {
     icon: Code2,
