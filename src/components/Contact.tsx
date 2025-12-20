@@ -32,6 +32,13 @@ export const Contact = () => {
   useEffect(() => {
     if (state.succeeded) {
       setIsFlipped(true);
+      
+      // Auto flip back after 5 seconds
+      const timer = setTimeout(() => {
+        setIsFlipped(false);
+      }, 5000);
+      
+      return () => clearTimeout(timer);
     }
   }, [state.succeeded]);
 
@@ -190,10 +197,6 @@ export const Contact = () => {
                     <p className="text-muted-foreground text-lg leading-relaxed max-w-sm">
                       Thanks for reaching out! I'll get back to you as soon as possible.
                     </p>
-                    <div className="mt-8 flex items-center gap-2 text-sm text-muted-foreground">
-                      <Mail className="h-4 w-4" />
-                      <span>Check your inbox for a confirmation</span>
-                    </div>
                   </CardContent>
                 </Card>
               </div>
