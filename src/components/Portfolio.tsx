@@ -16,20 +16,20 @@ const projects: Project[] = [
   {
     title: "OCA Website",
     description:
-      "A modern organizational website built with clean design principles and responsive layout. Features include dynamic content sections and optimized performance.",
+      "A local eCommerce store featuring product showcases, seamless navigation, and a user-friendly shopping experience optimized for customer engagement.",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
-    tags: ["HTML", "CSS", "JavaScript"],
-    githubUrl: "https://github.com/dieudonne",
-    liveUrl: "#",
+    tags: ["WordPress"],
+    githubUrl: "",
+    liveUrl: "https://ouicestnous.com/",
   },
   {
-    title: "Omnifood",
+    title: "Walkin Progress",
     description:
-      "A fictional food delivery service landing page showcasing modern CSS techniques, smooth animations, and conversion-focused design patterns.",
+      "A non-profit organization website dedicated to shaping young minds with knowledge and skills through community-driven programs and initiatives.",
     image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80",
     tags: ["HTML", "CSS", "JavaScript"],
-    githubUrl: "https://github.com/dieudonne",
-    liveUrl: "#",
+    githubUrl: "https://github.com/donkolony/walkin_progress",
+    liveUrl: "https://donkolony.github.io/walkin_progress/",
   },
   {
     title: "Daniel's Portfolio",
@@ -37,8 +37,8 @@ const projects: Project[] = [
       "A sleek developer portfolio featuring dark theme, smooth scrolling, and interactive project showcases. Built with performance and accessibility in mind.",
     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
     tags: ["React", "Tailwind", "TypeScript"],
-    githubUrl: "https://github.com/dieudonne",
-    liveUrl: "#",
+    githubUrl: "https://github.com/ChimeneD/portfolio",
+    liveUrl: "https://chimene.dev/",
   },
 ];
 
@@ -72,16 +72,18 @@ export const Portfolio = () => {
                   />
                   {/* Overlay on hover */}
                   <div className="absolute inset-0 bg-foreground/80 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-4">
-                    <Button
-                      size="icon"
-                      variant="secondary"
-                      className="rounded-full hover:scale-110 transition-transform duration-200"
-                      asChild
-                    >
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-5 w-5" />
-                      </a>
-                    </Button>
+                    {project.githubUrl && (
+                      <Button
+                        size="icon"
+                        variant="secondary"
+                        className="rounded-full hover:scale-110 transition-transform duration-200"
+                        asChild
+                      >
+                        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                          <Github className="h-5 w-5" />
+                        </a>
+                      </Button>
+                    )}
                     <Button
                       size="icon"
                       variant="secondary"
