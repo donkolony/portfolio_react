@@ -23,7 +23,15 @@ const skills: Skill[] = [
   { name: "Figma", level: 70, category: "tools" },
 ];
 
-const SkillBar = ({ name, level, isVisible }: { name: string; level: number; isVisible: boolean }) => (
+const SkillBar = ({
+  name,
+  level,
+  isVisible,
+}: {
+  name: string;
+  level: number;
+  isVisible: boolean;
+}) => (
   <div className="space-y-2">
     <div className="flex justify-between items-center">
       <span className="text-sm font-medium">{name}</span>
@@ -32,13 +40,19 @@ const SkillBar = ({ name, level, isVisible }: { name: string; level: number; isV
     <div className="h-2 bg-secondary rounded-full overflow-hidden">
       <div
         className="h-full bg-foreground rounded-full transition-all duration-1000 ease-out"
-        style={{ width: isVisible ? `${level}%` : '0%' }}
+        style={{ width: isVisible ? `${level}%` : "0%" }}
       />
     </div>
   </div>
 );
 
-const SkillCard = ({ title, skills: skillList }: { title: string; skills: Skill[] }) => {
+const SkillCard = ({
+  title,
+  skills: skillList,
+}: {
+  title: string;
+  skills: Skill[];
+}) => {
   const { ref, isVisible } = useScrollAnimation({ threshold: 0.2 });
 
   return (
@@ -50,7 +64,12 @@ const SkillCard = ({ title, skills: skillList }: { title: string; skills: Skill[
         </h3>
         <div className="space-y-4">
           {skillList.map((skill) => (
-            <SkillBar key={skill.name} name={skill.name} level={skill.level} isVisible={isVisible} />
+            <SkillBar
+              key={skill.name}
+              name={skill.name}
+              level={skill.level}
+              isVisible={isVisible}
+            />
           ))}
         </div>
       </CardContent>
@@ -88,7 +107,11 @@ export const Skills = () => {
             <SkillCard title="Backend" skills={backendSkills} />
           </AnimatedSection>
 
-          <AnimatedSection animation="fade-up" delay={300} className="md:col-span-2 lg:col-span-1">
+          <AnimatedSection
+            animation="fade-up"
+            delay={300}
+            className="md:col-span-2 lg:col-span-1"
+          >
             <SkillCard title="Tools & Other" skills={toolSkills} />
           </AnimatedSection>
         </div>

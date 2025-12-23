@@ -1,5 +1,6 @@
 import { useForm, ValidationError } from "@formspree/react";
-import { Send, Github, Linkedin, Mail, MapPin, Loader2, CheckCircle, Instagram } from "lucide-react";
+import { Send, Mail, MapPin, Loader2, CheckCircle } from "lucide-react";
+import { FiInstagram, FiGithub, FiLinkedin } from "react-icons/fi";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,16 +10,25 @@ import { useEffect, useState } from "react";
 
 // Custom X (Twitter) icon component
 const XIcon = ({ className }: { className?: string }) => (
-  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
 );
 
 const socialLinks = [
-  { icon: Github, href: "https://github.com/donkolony", label: "GitHub" },
-  { icon: Linkedin, href: "https://www.linkedin.com/in/d-kolony/", label: "LinkedIn" },
+  { icon: FiGithub, href: "https://github.com/donkolony", label: "GitHub" },
+  {
+    icon: FiLinkedin,
+    href: "https://www.linkedin.com/in/d-kolony/",
+    label: "LinkedIn",
+  },
   { icon: XIcon, href: "https://x.com/", label: "X" },
-  { icon: Instagram, href: "https://www.instagram.com/", label: "Instagram" },
+  { icon: FiInstagram, href: "https://www.instagram.com/", label: "Instagram" },
 ];
 
 export const Contact = () => {
@@ -31,8 +41,9 @@ export const Contact = () => {
     // Check for reduced motion preference
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
-    
-    const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+
+    const handler = (e: MediaQueryListEvent) =>
+      setPrefersReducedMotion(e.matches);
     mediaQuery.addEventListener("change", handler);
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
@@ -40,13 +51,13 @@ export const Contact = () => {
   useEffect(() => {
     if (state.succeeded && !isFlipped) {
       setIsFlipped(true);
-      
+
       // Auto flip back after 5 seconds and reset form
       const timer = setTimeout(() => {
         setIsFlipped(false);
-        setFormKey(prev => prev + 1); // Reset form by changing key
+        setFormKey((prev) => prev + 1); // Reset form by changing key
       }, 5000);
-      
+
       return () => clearTimeout(timer);
     }
   }, [state.succeeded, isFlipped]);
@@ -71,7 +82,7 @@ export const Contact = () => {
           <AnimatedSection animation="slide-left" delay={100}>
             <div className="space-y-8">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                I'm always open to discussing new projects, creative ideas, or 
+                I'm always open to discussing new projects, creative ideas, or
                 opportunities to be part of your vision. Feel free to reach out!
               </p>
 
@@ -82,7 +93,10 @@ export const Contact = () => {
                   </div>
                   <div>
                     <p className="text-sm text-muted-foreground">Email</p>
-                    <a href="mailto:donkolony@gmail.com" className="font-medium hover:underline">
+                    <a
+                      href="mailto:donkolony@gmail.com"
+                      className="font-medium hover:underline"
+                    >
                       donkolony@gmail.com
                     </a>
                   </div>
@@ -119,23 +133,35 @@ export const Contact = () => {
 
           {/* Contact Form with Flip Animation */}
           <AnimatedSection animation="slide-right" delay={200}>
-            <div 
+            <div
               className="relative h-[420px]"
               style={{ perspective: "1000px" }}
             >
               <div
                 className={`relative w-full h-full transition-transform duration-700 ${
                   prefersReducedMotion ? "" : "[transform-style:preserve-3d]"
-                } ${isFlipped && !prefersReducedMotion ? "[transform:rotateY(180deg)]" : ""}`}
+                } ${
+                  isFlipped && !prefersReducedMotion
+                    ? "[transform:rotateY(180deg)]"
+                    : ""
+                }`}
               >
                 {/* Front - Contact Form */}
-                <Card 
+                <Card
                   className={`absolute inset-0 bg-card border-border ${
-                    prefersReducedMotion ? (isFlipped ? "hidden" : "") : "[backface-visibility:hidden]"
+                    prefersReducedMotion
+                      ? isFlipped
+                        ? "hidden"
+                        : ""
+                      : "[backface-visibility:hidden]"
                   }`}
                 >
                   <CardContent className="p-6 md:p-8 h-full">
-                    <form key={formKey} onSubmit={handleSubmit} className="space-y-6 h-full flex flex-col">
+                    <form
+                      key={formKey}
+                      onSubmit={handleSubmit}
+                      className="space-y-6 h-full flex flex-col"
+                    >
                       <div>
                         <Input
                           id="name"
@@ -144,7 +170,12 @@ export const Contact = () => {
                           required
                           className="bg-background transition-all duration-200 focus:scale-[1.01]"
                         />
-                        <ValidationError prefix="Name" field="name" errors={state.errors} className="text-sm text-destructive mt-1" />
+                        <ValidationError
+                          prefix="Name"
+                          field="name"
+                          errors={state.errors}
+                          className="text-sm text-destructive mt-1"
+                        />
                       </div>
                       <div>
                         <Input
@@ -155,7 +186,12 @@ export const Contact = () => {
                           required
                           className="bg-background transition-all duration-200 focus:scale-[1.01]"
                         />
-                        <ValidationError prefix="Email" field="email" errors={state.errors} className="text-sm text-destructive mt-1" />
+                        <ValidationError
+                          prefix="Email"
+                          field="email"
+                          errors={state.errors}
+                          className="text-sm text-destructive mt-1"
+                        />
                       </div>
                       <div className="flex-1">
                         <Textarea
@@ -166,7 +202,12 @@ export const Contact = () => {
                           rows={5}
                           className="bg-background resize-none transition-all duration-200 focus:scale-[1.01] h-full min-h-[120px]"
                         />
-                        <ValidationError prefix="Message" field="message" errors={state.errors} className="text-sm text-destructive mt-1" />
+                        <ValidationError
+                          prefix="Message"
+                          field="message"
+                          errors={state.errors}
+                          className="text-sm text-destructive mt-1"
+                        />
                       </div>
                       <Button
                         type="submit"
@@ -191,10 +232,12 @@ export const Contact = () => {
                 </Card>
 
                 {/* Back - Success Message */}
-                <Card 
+                <Card
                   className={`absolute inset-0 bg-card border-border ${
-                    prefersReducedMotion 
-                      ? (isFlipped ? "" : "hidden") 
+                    prefersReducedMotion
+                      ? isFlipped
+                        ? ""
+                        : "hidden"
                       : "[backface-visibility:hidden] [transform:rotateY(180deg)]"
                   }`}
                 >
@@ -204,7 +247,8 @@ export const Contact = () => {
                     </div>
                     <h3 className="text-2xl font-bold mb-3">Message Sent!</h3>
                     <p className="text-muted-foreground text-lg leading-relaxed max-w-sm">
-                      Thanks for reaching out! I'll get back to you as soon as possible.
+                      Thanks for reaching out! I'll get back to you as soon as
+                      possible.
                     </p>
                   </CardContent>
                 </Card>
