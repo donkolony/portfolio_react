@@ -51,7 +51,7 @@ export const Hero = () => {
 
           {/* Value proposition */}
           <p className="text-base md:text-lg max-w-2xl mx-auto mb-10 opacity-75 leading-relaxed animate-fade-in-up delay-300">
-            I craft clean, responsive, and user-focused web experiences. 
+            I craft clean, responsive, and user-focused web experiences.
             Passionate about building digital products that make a difference.
           </p>
 
@@ -62,7 +62,8 @@ export const Hero = () => {
               className="bg-white text-black hover:bg-white/90 hover:scale-105 font-medium px-8 transition-all duration-300 shadow-lg hover:shadow-xl"
               asChild
             >
-              <a href="/cv.pdf" download>
+              {/* TODO ->: Update CV */}
+              <a href="/cv/dieudonne_kolony_resume.pdf" download>
                 <Download className="mr-2 h-4 w-4" />
                 Download CV
               </a>
