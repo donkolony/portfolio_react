@@ -46,19 +46,19 @@ export const About = () => {
           <AnimatedSection animation="slide-left" delay={100}>
             <div className="space-y-6">
               <p className="text-lg leading-relaxed text-muted-foreground">
-                I'm a frontend developer with a passion for building beautiful, 
-                functional web experiences. My journey began with curiosity about 
-                how websites work, and has evolved into a deep love for crafting 
-                user-centric digital solutions.
+                I'm a frontend developer with a passion for building beautiful,
+                functional web experiences. My journey began with curiosity
+                about how websites work, and has evolved into a deep love for
+                crafting user-centric digital solutions.
               </p>
               <p className="text-lg leading-relaxed text-muted-foreground">
-                I specialize in modern JavaScript frameworks, particularly React, 
-                and take pride in writing clean, maintainable code. I believe great 
-                design and solid engineering go hand in hand.
+                I specialize in modern JavaScript frameworks, particularly
+                React, and take pride in writing clean, maintainable code. I
+                believe great design and solid engineering go hand in hand.
               </p>
               <p className="text-lg leading-relaxed text-muted-foreground">
-                When I'm not coding, you'll find me exploring new technologies, 
-                contributing to open source, or helping aspiring developers find 
+                When I'm not coding, you'll find me exploring new technologies,
+                contributing to open source, or helping aspiring developers find
                 their path in tech.
               </p>
             </div>
@@ -67,14 +67,20 @@ export const About = () => {
           {/* Right side - Highlights */}
           <div className="grid grid-cols-2 gap-4">
             {highlights.map((item, index) => (
-              <AnimatedSection key={index} animation="scale" delay={150 + index * 100}>
+              <AnimatedSection
+                key={index}
+                animation="scale"
+                delay={150 + index * 100}
+              >
                 <Card className="group hover-lift bg-card border-border h-full">
                   <CardContent className="p-6 text-center">
                     <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-secondary flex items-center justify-center group-hover:scale-110 group-hover:bg-foreground group-hover:text-background transition-all duration-300">
                       <item.icon className="h-6 w-6" />
                     </div>
                     <h3 className="text-xl font-bold mb-1">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {item.description}
+                    </p>
                   </CardContent>
                 </Card>
               </AnimatedSection>

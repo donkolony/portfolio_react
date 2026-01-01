@@ -63,7 +63,7 @@ export const Hero = () => {
               asChild
             >
               {/* TODO ->: Update CV */}
-              <a href="/cv/dieudonne_kolony_resume.pdf" download>
+              <a href="/cv/dieudonne_kolony_cv.pdf" download>
                 <Download className="mr-2 h-4 w-4" />
                 Download CV
               </a>
