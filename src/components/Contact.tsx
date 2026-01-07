@@ -94,10 +94,10 @@ export const Contact = () => {
                   <div>
                     <p className="text-sm text-muted-foreground">Email</p>
                     <a
-                      href="mailto:donkolony@gmail.com"
+                      href="mailto:Dieudonne.Kolony@outlook.com"
                       className="font-medium hover:underline"
                     >
-                      donkolony@gmail.com
+                      Dieudonne Kolony
                     </a>
                   </div>
                 </div>
