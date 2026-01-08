@@ -36,7 +36,7 @@ const projects: Project[] = [
     description:
       "A sleek developer portfolio featuring dark theme, smooth scrolling, and interactive project showcases. Built with performance and accessibility in mind.",
     image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80",
-    tags: ["React", "Tailwind", "TypeScript"],
+    tags: ["React", "Tailwind", "JavaScript"],
     githubUrl: "https://github.com/ChimeneD/portfolio",
     liveUrl: "https://chimene.dev/",
   },

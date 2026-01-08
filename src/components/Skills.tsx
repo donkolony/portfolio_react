@@ -9,18 +9,18 @@ interface Skill {
 }
 
 const skills: Skill[] = [
-  { name: "HTML5", level: 95, category: "frontend" },
-  { name: "CSS3/Sass", level: 90, category: "frontend" },
-  { name: "JavaScript", level: 88, category: "frontend" },
-  { name: "React", level: 85, category: "frontend" },
-  { name: "Tailwind CSS", level: 90, category: "frontend" },
-  { name: "TypeScript", level: 75, category: "frontend" },
-  { name: "Node.js", level: 70, category: "backend" },
-  { name: "Express.js", level: 65, category: "backend" },
-  { name: "PostgreSQL", level: 60, category: "backend" },
-  { name: "Python", level: 55, category: "backend" },
+  { name: "HTML5", level: 90, category: "frontend" },
+  { name: "CSS3", level: 80, category: "frontend" },
+  { name: "JavaScript", level: 70, category: "frontend" },
+  { name: "React", level: 65, category: "frontend" },
+  { name: "Tailwind CSS", level: 70, category: "frontend" },
+  { name: "TypeScript", level: 55, category: "frontend" },
+  { name: "Node.js", level: 60, category: "backend" },
+  { name: "Express.js", level: 60, category: "backend" },
+  { name: "PostgreSQL", level: 55, category: "backend" },
+  { name: "Python", level: 80, category: "backend" },
   { name: "Git/GitHub", level: 85, category: "tools" },
-  { name: "Figma", level: 70, category: "tools" },
+  { name: "Figma", level: 60, category: "tools" },
 ];
 
 const SkillBar = ({

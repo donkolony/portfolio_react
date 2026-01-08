@@ -49,18 +49,18 @@ export const Contact = () => {
   }, []);
 
   useEffect(() => {
-    if (state.succeeded && !isFlipped) {
-      setIsFlipped(true);
+    if (!state.succeeded) return;
 
-      // Auto flip back after 5 seconds and reset form
-      const timer = setTimeout(() => {
-        setIsFlipped(false);
-        setFormKey((prev) => prev + 1); // Reset form by changing key
-      }, 5000);
+    setIsFlipped(true);
 
-      return () => clearTimeout(timer);
-    }
-  }, [state.succeeded, isFlipped]);
+    const timer = setTimeout(() => {
+      setIsFlipped(false);
+      setFormKey((prev) => prev + 1); // Reset form
+    }, 5000);
+   
+    return () => clearTimeout(timer);
+    
+  }, [state.succeeded]);
 
   return (
     <section id="contact" className="section-padding bg-secondary/30">
