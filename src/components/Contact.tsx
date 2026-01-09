@@ -31,11 +31,15 @@ const socialLinks = [
   { icon: FiInstagram, href: "https://www.instagram.com/", label: "Instagram" },
 ];
 
+const RATE_LIMIT_MS = 30000; // 30 seconds between submissions
+
 export const Contact = () => {
   const [state, handleSubmit, reset] = useForm("xojaedol");
   const [isFlipped, setIsFlipped] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [formKey, setFormKey] = useState(0);
+  const [lastSubmitTime, setLastSubmitTime] = useState<number>(0);
+  const [rateLimitError, setRateLimitError] = useState<string | null>(null);
 
   useEffect(() => {
     // Check for reduced motion preference
@@ -52,15 +56,40 @@ export const Contact = () => {
     if (!state.succeeded) return;
 
     setIsFlipped(true);
+    setLastSubmitTime(Date.now());
 
     const timer = setTimeout(() => {
       setIsFlipped(false);
-      setFormKey((prev) => prev + 1); // Reset DOM inputs (uncontrolled)
-      reset(); // Reset Formspree state so future submits can succeed-trigger again
+      setFormKey((prev) => prev + 1);
+      reset();
+      setRateLimitError(null);
     }, 5000);
 
     return () => clearTimeout(timer);
   }, [state.succeeded, reset]);
+
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const form = e.currentTarget;
+    const honeypot = form.querySelector<HTMLInputElement>('input[name="_gotcha"]');
+    
+    // If honeypot is filled, silently reject (bot detected)
+    if (honeypot?.value) {
+      e.preventDefault();
+      return;
+    }
+
+    // Rate limiting check
+    const now = Date.now();
+    if (lastSubmitTime && now - lastSubmitTime < RATE_LIMIT_MS) {
+      e.preventDefault();
+      const secondsLeft = Math.ceil((RATE_LIMIT_MS - (now - lastSubmitTime)) / 1000);
+      setRateLimitError(`Please wait ${secondsLeft} seconds before sending another message.`);
+      return;
+    }
+
+    setRateLimitError(null);
+    handleSubmit(e);
+  };
 
   return (
     <section id="contact" className="section-padding bg-secondary/30">
@@ -159,9 +188,17 @@ export const Contact = () => {
                   <CardContent className="p-6 md:p-8 h-full">
                     <form
                       key={formKey}
-                      onSubmit={handleSubmit}
+                      onSubmit={handleFormSubmit}
                       className="space-y-6 h-full flex flex-col"
                     >
+                      {/* Honeypot field - hidden from users, traps bots */}
+                      <input
+                        type="text"
+                        name="_gotcha"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        style={{ position: 'absolute', left: '-9999px', opacity: 0 }}
+                      />
                       <div>
                         <Input
                           id="name"
@@ -209,6 +246,9 @@ export const Contact = () => {
                           className="text-sm text-destructive mt-1"
                         />
                       </div>
+                      {rateLimitError && (
+                        <p className="text-sm text-destructive">{rateLimitError}</p>
+                      )}
                       <Button
                         type="submit"
                         size="lg"
