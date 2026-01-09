@@ -32,7 +32,7 @@ const socialLinks = [
 ];
 
 export const Contact = () => {
-  const [state, handleSubmit] = useForm("xojaedol");
+  const [state, handleSubmit, reset] = useForm("xojaedol");
   const [isFlipped, setIsFlipped] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [formKey, setFormKey] = useState(0);
@@ -55,12 +55,12 @@ export const Contact = () => {
 
     const timer = setTimeout(() => {
       setIsFlipped(false);
-      setFormKey((prev) => prev + 1); // Reset form
+      setFormKey((prev) => prev + 1); // Reset DOM inputs (uncontrolled)
+      reset(); // Reset Formspree state so future submits can succeed-trigger again
     }, 5000);
-   
+
     return () => clearTimeout(timer);
-    
-  }, [state.succeeded]);
+  }, [state.succeeded, reset]);
 
   return (
     <section id="contact" className="section-padding bg-secondary/30">
