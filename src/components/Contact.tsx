@@ -31,15 +31,11 @@ const socialLinks = [
   { icon: FiInstagram, href: "https://www.instagram.com/", label: "Instagram" },
 ];
 
-const RATE_LIMIT_MS = 30000; // 30 seconds between submissions
-
 export const Contact = () => {
   const [state, handleSubmit, reset] = useForm("xojaedol");
   const [isFlipped, setIsFlipped] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [formKey, setFormKey] = useState(0);
-  const [lastSubmitTime, setLastSubmitTime] = useState<number>(0);
-  const [rateLimitError, setRateLimitError] = useState<string | null>(null);
 
   useEffect(() => {
     // Check for reduced motion preference
@@ -56,13 +52,11 @@ export const Contact = () => {
     if (!state.succeeded) return;
 
     setIsFlipped(true);
-    setLastSubmitTime(Date.now());
 
     const timer = setTimeout(() => {
       setIsFlipped(false);
       setFormKey((prev) => prev + 1);
       reset();
-      setRateLimitError(null);
     }, 5000);
 
     return () => clearTimeout(timer);
@@ -78,16 +72,6 @@ export const Contact = () => {
       return;
     }
 
-    // Rate limiting check
-    const now = Date.now();
-    if (lastSubmitTime && now - lastSubmitTime < RATE_LIMIT_MS) {
-      e.preventDefault();
-      const secondsLeft = Math.ceil((RATE_LIMIT_MS - (now - lastSubmitTime)) / 1000);
-      setRateLimitError(`Please wait ${secondsLeft} seconds before sending another message.`);
-      return;
-    }
-
-    setRateLimitError(null);
     handleSubmit(e);
   };
 
@@ -246,9 +230,6 @@ export const Contact = () => {
                           className="text-sm text-destructive mt-1"
                         />
                       </div>
-                      {rateLimitError && (
-                        <p className="text-sm text-destructive">{rateLimitError}</p>
-                      )}
                       <Button
                         type="submit"
                         size="lg"
